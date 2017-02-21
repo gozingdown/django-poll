@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: django-polls
-Version: 0.1
+Version: 0.2
 Summary: A simple Django app to conduct Web-based polls.
 Home-page: https://www.example.com/
 Author: Your Name

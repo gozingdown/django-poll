@@ -1,9 +1,12 @@
 from __future__ import unicode_literals
-
+import logging
 import datetime
 
 from django.utils import timezone
 from django.db import models
+
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.StreamHandler())
 
 # Create your models here.
 class Question(models.Model):
@@ -21,9 +24,15 @@ class Question(models.Model):
         return self.question_text
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name="list of sites")
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.choice_text
+
+    def save(self, *args, **kwargs):
+        logger.warning('Overwriting save() in %s.%s' % (__name__, self.__class__.__name__))
+        super(Choice, self).save(*args, **kwargs)
+        #super(Choice, self).save(args, kwargs)
+        logger.warning('Finished saving obj')
